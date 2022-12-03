@@ -1,4 +1,7 @@
 from flask import Blueprint
+from flask import Flask, jsonify
+from flaskext.mysql import MySQL
+from src import db
 
 views = Blueprint('views', __name__)
 
@@ -13,3 +16,4 @@ def home():
 @views.route('/test')
 def tester():
     return "<h1>this is a test!</h1>"
+    

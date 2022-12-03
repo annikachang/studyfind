@@ -49,16 +49,17 @@ services:
     # webapp.  webapp user password is stored in a secret 
     # file as well. 
     environment:
-      MYSQL_USER: webapp
-      MYSQL_PASSWORD_FILE: /run/secrets/secret_db_pw
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/secret_db_root_pw
+      - MYSQL_ROOT_PASSWORD=abc123
+      # MYSQL_USER: webapp
+      # MYSQL_PASSWORD_FILE: /run/secrets/secret_db_pw
+      # MYSQL_ROOT_PASSWORD_FILE: /run/secrets/secret_db_root_pw
     
-    secrets:
-      - secret_db_pw
-      - secret_db_root_pw
+#     secrets:
+#       - secret_db_pw
+#       - secret_db_root_pw
 
-secrets:
-  secret_db_pw:
-    file: ./secrets/db_password.txt
-  secret_db_root_pw:
-    file: ./secrets/db_root_password.txt
+# secrets:
+#   secret_db_pw:
+#     file: ./secrets/db_password.txt
+#   secret_db_root_pw:
+#     file: ./secrets/db_root_password.txt
