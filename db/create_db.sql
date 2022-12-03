@@ -1,5 +1,5 @@
 CREATE DATABASE study_find;
-CREATE USER 'webapp'@'%' IDENTIFIED BY 'abc123';
+CREATE USER 'webapp'@'%' IDENTIFIED BY open('/secrets/db_password.txt').readline();
 GRANT ALL PRIVILEGES ON study_find.* TO 'webapp'@'%';
 FLUSH PRIVILEGES;
 
