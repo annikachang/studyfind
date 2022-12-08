@@ -1,5 +1,5 @@
 CREATE DATABASE study_find;
-CREATE USER 'webapp'@'%' IDENTIFIED BY open('/secrets/db_password.txt').readline();
+
 GRANT ALL PRIVILEGES ON study_find.* TO 'webapp'@'%';
 FLUSH PRIVILEGES;
 
@@ -29,15 +29,22 @@ values (4, '90831', 'CA', 'Long Beach', '38 Roxbury Plaza', 'Alexandre', 'Delgar
 CREATE TABLE Study_Space(
     spaceID INTEGER NOT NULL,
     name TINYTEXT NOT NULL,
+    imageURL TEXT NOT NULL,
     capacity INTEGER NOT NULL CHECK (capacity >= 0),
+    location TINYTEXT NOT NULL,
     PRIMARY KEY (spaceID)
 );
 
-insert into Study_Space (spaceID, name, capacity) values (1, 'Tattes', 50);
-insert into Study_Space (spaceID, name, capacity) values (2, 'Caffe Nero', 37);
-insert into Study_Space (spaceID, name, capacity) values (3, 'Snell', 503);
-insert into Study_Space (spaceID, name, capacity) values (4, 'Boston Public Library', 231);
-insert into Study_Space (spaceID, name, capacity) values (5, 'Central Park', 1000);
+insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
+(1, 'Tattes', 'https://cdn.vox-cdn.com/thumbor/5v_cnIacNUXl1wW6jF-AK47Ask8=/0x0:1125x1389/1200x800/filters:focal(190x670:370x850)/cdn.vox-cdn.com/uploads/chorus_image/image/67292350/IMG_6041.0.jpg', 50, '369 Huntington Ave');
+insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
+(2, 'Caffe Nero', 'https://media.gettyimages.com/id/1233455804/photo/belfast-united-kingdom-customers-sit-outside-caffe-nero-on-college-street.jpg?s=612x612&w=gi&k=20&c=WO7QsTgLkWkOUv5Sktjjdp-MvlyZjeJqiH9KsH1vV_E=', 37, '100 Huntington Ave');
+insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
+(3, 'Snell', 'https://huntnewsnu.com/wp-content/uploads/2014/05/5592451981_a7d5efb92b_z.jpg', 503, '360 Huntington Ave');
+insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
+(4, 'Boston Public Library', 'https://assets.simpleviewinc.com/simpleview/image/fetch/c_limit,h_1200,q_75,w_1200/https://assets.simpleviewinc.com/simpleview/image/upload/crm/boston/bpl0_25978b77-5056-a36a-0648935cebef87c5.jpg', 231, '700 Bolyston Street');
+insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
+(5, 'Central Park', 'https://blog.cambridgecoaching.com/hubfs/Central%20Park.png', 1000, 'New York, NY');
 
 CREATE TABLE Orders (
     orderID INTEGER NOT NULL,
@@ -159,7 +166,7 @@ CREATE TABLE Item (
 
 
 insert into Item (price, name, typeID) values (1.15, 'Cookie', 1);
-insert into Item (price, name, typeID) values (4.50, 'Coffe', 1);
+insert into Item (price, name, typeID) values (4.50, 'Coffee', 1);
 insert into Item (price, name, typeID) values (3.25, 'Latte', 2);
 insert into Item (price, name, typeID) values (5.89, 'Soup', 2);
 
@@ -188,26 +195,37 @@ values (4, '917-923-1092', 'arj@gmail.com', 1, 5, 4);
 
 
 CREATE TABLE Review (
-    reviewID INTEGER NOT NULL,
-    starsNum char(1) CHECK (starsNum >= 1 and starsNum <= 5),
+    reviewID INTEGER AUTO_INCREMENT NOT NULL,
+    starsNum INTEGER CHECK (starsNum >= 1 and starsNum <= 5),
     comment TEXT,
-    ambienceNum char(2) CHECK (ambienceNum >= 1 and ambienceNum <= 10),
-    cleanlinessNum char(2) CHECK (cleanlinessNum >= 1 and cleanlinessNum <= 10),
-    quietnessNum char(2) CHECK (quietnessNum >= 1 and quietnessNum <= 10),
+    ambienceNum INTEGER CHECK (ambienceNum >= 1 and ambienceNum <= 10),
+    cleanlinessNum INTEGER CHECK (cleanlinessNum >= 1 and cleanlinessNum <= 10),
+    quietnessNum INTEGER CHECK (quietnessNum >= 1 and quietnessNum <= 10),
     demographic TEXT,
     spaceID INTEGER NOT NULL,
     PRIMARY KEY (reviewID),
     CONSTRAINT fk_12 FOREIGN KEY (spaceID) REFERENCES Study_Space(spaceID)
 );
 
-insert into Review (reviewID, starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
-values (1, 3, "I like it a lot.", 5, 8, 1, "A lot of college students", 2);
-insert into Review (reviewID, starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
-values (2, 2, "Absolutely deplorable conditions to study in.", 6, 10, 1, null, 2);
-insert into Review (reviewID, starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
-values (3, 1, "Could not focus when studying for my exam!!!!", 10, null, 1, "Pretty diverse crowd of studious people!!", 2);
-insert into Review (reviewID, starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
-values (4, 5, "I like it a lot.", 2, 8, null, null, 2);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (3, "I like it a lot.", 5, 8, 1, "A lot of college students", 2);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (2, "Absolutely deplorable conditions to study in.", 6, 10, 1, null, 2);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (1, "Could not focus when studying for my exam!!!!", 10, null, 1, "Pretty diverse crowd of studious people!!", 2);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (5, "I like it a lot.", 2, 8, null, null, 2);
+
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (5, "Good food and great staff.", 10, 8, 7, null, 1);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (5, "Would recommend highly to a friend.", 8, 6, null, null, 1);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (2, "So expensive!!!", 7, 8, null, null, 1);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (2, "Terrible aesthetics, so noisy!", 2, 5, 10, "Many people", 3);
+insert into Review (starsNum, comment, ambienceNum, cleanlinessNum, quietnessNum, demographic, spaceID)
+values (4, "Open 24/7", 3, 5, 5, null, 3);
 
 
 
