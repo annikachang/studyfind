@@ -27,7 +27,7 @@ values (4, '90831', 'CA', 'Long Beach', '38 Roxbury Plaza', 'Alexandre', 'Delgar
 
 
 CREATE TABLE Study_Space(
-    spaceID INTEGER NOT NULL,
+    spaceID INTEGER AUTO_INCREMENT NOT NULL,
     name TINYTEXT NOT NULL,
     imageURL TEXT NOT NULL,
     capacity INTEGER NOT NULL CHECK (capacity >= 0),
@@ -35,16 +35,16 @@ CREATE TABLE Study_Space(
     PRIMARY KEY (spaceID)
 );
 
-insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
-(1, 'Tattes', 'https://cdn.vox-cdn.com/thumbor/5v_cnIacNUXl1wW6jF-AK47Ask8=/0x0:1125x1389/1200x800/filters:focal(190x670:370x850)/cdn.vox-cdn.com/uploads/chorus_image/image/67292350/IMG_6041.0.jpg', 50, '369 Huntington Ave');
-insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
-(2, 'Caffe Nero', 'https://media.gettyimages.com/id/1233455804/photo/belfast-united-kingdom-customers-sit-outside-caffe-nero-on-college-street.jpg?s=612x612&w=gi&k=20&c=WO7QsTgLkWkOUv5Sktjjdp-MvlyZjeJqiH9KsH1vV_E=', 37, '100 Huntington Ave');
-insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
-(3, 'Snell', 'https://huntnewsnu.com/wp-content/uploads/2014/05/5592451981_a7d5efb92b_z.jpg', 503, '360 Huntington Ave');
-insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
-(4, 'Boston Public Library', 'https://assets.simpleviewinc.com/simpleview/image/fetch/c_limit,h_1200,q_75,w_1200/https://assets.simpleviewinc.com/simpleview/image/upload/crm/boston/bpl0_25978b77-5056-a36a-0648935cebef87c5.jpg', 231, '700 Bolyston Street');
-insert into Study_Space (spaceID, name, imageURL, capacity, location) values 
-(5, 'Central Park', 'https://blog.cambridgecoaching.com/hubfs/Central%20Park.png', 1000, 'New York, NY');
+insert into Study_Space (name, imageURL, capacity, location) values 
+('Tattes', 'https://cdn.vox-cdn.com/thumbor/5v_cnIacNUXl1wW6jF-AK47Ask8=/0x0:1125x1389/1200x800/filters:focal(190x670:370x850)/cdn.vox-cdn.com/uploads/chorus_image/image/67292350/IMG_6041.0.jpg', 50, '369 Huntington Ave');
+insert into Study_Space (name, imageURL, capacity, location) values 
+('Caffe Nero', 'https://media.gettyimages.com/id/1233455804/photo/belfast-united-kingdom-customers-sit-outside-caffe-nero-on-college-street.jpg?s=612x612&w=gi&k=20&c=WO7QsTgLkWkOUv5Sktjjdp-MvlyZjeJqiH9KsH1vV_E=', 37, '100 Huntington Ave');
+insert into Study_Space (name, imageURL, capacity, location) values 
+('Snell', 'https://huntnewsnu.com/wp-content/uploads/2014/05/5592451981_a7d5efb92b_z.jpg', 503, '360 Huntington Ave');
+insert into Study_Space (name, imageURL, capacity, location) values 
+('Boston Public Library', 'https://assets.simpleviewinc.com/simpleview/image/fetch/c_limit,h_1200,q_75,w_1200/https://assets.simpleviewinc.com/simpleview/image/upload/crm/boston/bpl0_25978b77-5056-a36a-0648935cebef87c5.jpg', 231, '700 Bolyston Street');
+insert into Study_Space (name, imageURL, capacity, location) values 
+('Central Park', 'https://blog.cambridgecoaching.com/hubfs/Central%20Park.png', 1000, 'New York, NY');
 
 CREATE TABLE Orders (
     orderID INTEGER NOT NULL,
@@ -133,8 +133,8 @@ CREATE TABLE Study_Space_Type (
 insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (1, 'Cafe', 1, 1);
 insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (2, 'Library', 4, 4);
 insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (3, 'Park', 1, 5);
-insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (1, 'Cafe', 1, 2);
-insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (2, 'Library', 3, 4);
+insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (4, 'Cafe', 1, 2);
+insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (5, 'Library', 3, 4);
 insert into Study_Space_Type (typeID, typeName, studentID, spaceID) values (3, 'Park', 2, 5);
 
 
@@ -158,6 +158,7 @@ insert into Occupation (occupationID, name, studentID, reviewerID) values (4, 'S
 
 CREATE TABLE Item (
     price DECIMAL(5, 2) NOT NULL CHECK (price >= 0),
+    imageURL TEXT,
     name varchar(50) NOT NULL,
     typeID INTEGER NOT NULL,
     CONSTRAINT fk_8 FOREIGN KEY (typeID) REFERENCES Study_Space_Type(typeID),
@@ -165,10 +166,12 @@ CREATE TABLE Item (
 );
 
 
-insert into Item (price, name, typeID) values (1.15, 'Cookie', 1);
-insert into Item (price, name, typeID) values (4.50, 'Coffee', 1);
-insert into Item (price, name, typeID) values (3.25, 'Latte', 2);
-insert into Item (price, name, typeID) values (5.89, 'Soup', 2);
+insert into Item (imageURL, price, name, typeID) values ('https://clipartix.com/wp-content/uploads/2016/04/Cookie-clip-art-free-free-clipart-images.jpg', 1.15, 'Cookie', 1);
+insert into Item (imageURL, price, name, typeID) values ('https://i.pinimg.com/736x/a3/17/08/a317085b479e7cdff35a3c69f0d57b02.jpg', 4.50, 'Coffee', 1);
+insert into Item (imageURL, price, name, typeID) values ('https://www.pngkey.com/png/detail/69-690816_iced-tea-with-a-lemon-slice-royalty-free.png', 4.50, 'Iced tea', 1);
+insert into Item (imageURL, price, name, typeID) values ('https://thumbs.dreamstime.com/b/coffee-latte-art-cup-hand-drawn-vector-illustration-isolated-white-background-178040825.jpg', 3.25, 'Latte', 2);
+insert into Item (imageURL, price, name, typeID) values ('https://t4.ftcdn.net/jpg/01/40/74/41/360_F_140744153_FuKbOJitPEPs5YoUnK0HLQM9Okq11TP6.jpg', 5.89, 'Bagel', 2);
+insert into Item (imageURL, price, name, typeID) values ('https://media.istockphoto.com/id/148184516/vector/bottle-water.jpg?s=612x612&w=0&k=20&c=0-0cf8wQkxmUam6f1-ewB6rMWfpmu_EsmTdGZ4gjv4M=', 1.50, 'Water', 3);
 
 
 CREATE TABLE Contacts(
@@ -254,15 +257,25 @@ values (null, null, null, null, null, 4);
 
 CREATE TABLE Media_Types(
     name varchar(50) NOT NULL,
+    imageURL TEXT,
     spaceID INTEGER NOT NULL,
     CONSTRAINT fk_14 FOREIGN KEY (spaceID) REFERENCES Study_Space(spaceID),
     PRIMARY KEY (name, spaceID)
 );
 
-insert into Media_Types (name, spaceID)
-values ("Computer", 3);
-insert into Media_Types (name, spaceID)
-values ("Books", 2);
-insert into Media_Types (name, spaceID)
-values ("Piano", 2);
+insert into Media_Types (name, imageURL, spaceID)
+values ("Computer", 'https://pearlyarts.com/wp-content/uploads/2021/12/Laptop-Computer-Clipart-with-outline-WM.png', 3);
+insert into Media_Types (name, imageURL, spaceID)
+values ("Books", 'https://t3.ftcdn.net/jpg/00/53/73/42/360_F_53734293_rs3bkrl9n1EJZBj2CdogkmeF6W5aOhy5.jpg', 2);
+insert into Media_Types (name, imageURL, spaceID)
+values ("Piano", 'https://www.nicepng.com/png/detail/180-1805705_grand-piano-royalty-free-vector-clip-art-illustration.png', 2);
+insert into Media_Types (name, imageURL, spaceID)
+values ("Outlets", 'https://i.etsystatic.com/10919371/r/il/5d3da8/1632781748/il_fullxfull.1632781748_dtbo.jpg', 1);
+insert into Media_Types (name, imageURL, spaceID)
+values ("Outlets", 'https://i.etsystatic.com/10919371/r/il/5d3da8/1632781748/il_fullxfull.1632781748_dtbo.jpg', 5);
+insert into Media_Types (name, imageURL, spaceID)
+values ("Computer", 'https://pearlyarts.com/wp-content/uploads/2021/12/Laptop-Computer-Clipart-with-outline-WM.png',  4);
+insert into Media_Types (name, imageURL, spaceID)
+values ("TV", 'https://content.mycutegraphics.com/graphics/household/flat-screen-tv-clip-art.png', 4);
+
 

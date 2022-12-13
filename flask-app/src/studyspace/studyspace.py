@@ -1,20 +1,8 @@
 from flask import Blueprint, make_response
-from flask import Flask, jsonify
-from flaskext.mysql import MySQL
+from flask import jsonify
 from src import db
 
 studyspace_blueprint = Blueprint('studyspace_blueprint', __name__)
-
-@studyspace_blueprint.route("/", methods=['GET'])
-def get_studyspaces():
-    cur = db.get_db().cursor()
-    cur.execute('select * from Study_Space')
-    row_headers = [x[0] for x in cur.description]
-    json_data = []
-    theData = cur.fetchall()
-    for row in theData:
-       json_data.append(dict(zip(row_headers, row)))
-    return jsonify(json_data)
 
 
 @studyspace_blueprint.route("/<spaceID>", methods=['GET'])
@@ -89,3 +77,16 @@ def get_items(spaceID):
     the_response.mimetype = 'application/json'
     return the_response
 
+@studyspace_blueprint.route("/<spaceID>/type", methods=['GET'])
+def get_type(spaceID):
+    cur = db.get_db().cursor()
+    cur.execute('select typeName from Study_Space_Type where spaceID = {0}'.format(spaceID))
+    row_headers = [x[0] for x in cur.description]
+    json_data = []
+    theData = cur.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
