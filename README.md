@@ -23,7 +23,7 @@ This repo contains a boilerplate setup for spinning up 2 docker containers:
 
 ## About this application 
 
-StudyFind is catered towards anyone looking for a study space to easily find one close by. Study spaces can add basic information to their webpage to market themselves to any prospective visitors and visitors can leave an in-depth review of the place (ambience, cleanliness, quietness level). Anyone can add a new study space if one is not already in the database. 
+StudyFind is catered towards anyone looking for a study space to easily find one close by. Study spaces can add basic information to their pages to market themselves to any prospective visitors and visitors can leave an in-depth review of the place (accesiblitiy, ambience, cleanliness, quietness level). Anyone can add a new study space if one is not already in the database. 
 
 Implemented a REST API to provide access to the data using MySQL and Python. Connected API to AppSmith using ngrok to create the UI pages. 
 
